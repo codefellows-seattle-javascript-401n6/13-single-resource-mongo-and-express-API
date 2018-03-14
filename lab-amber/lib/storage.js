@@ -31,7 +31,6 @@ function get(id) {
 }
 
 function save(lead) {
-  console.log('lead in save', lead);
   let quoteModel = new Info.Quote({
     cost: lead.quote.cost
   });
@@ -46,7 +45,6 @@ function save(lead) {
       if (err) {
         console.error(err);
       }
-      console.log('in promise save to db', savedLead);
       resolve(savedLead);
     });
   });

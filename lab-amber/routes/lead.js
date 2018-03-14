@@ -19,11 +19,11 @@ router.get('/leads', (req, res) => {
         expired,
       }
       res.send(reply);
-      mongoose.disconnect();
+      // mongoose.disconnect();
     })
     .catch(err => {
       console.error(err);
-      mongoose.disconnect();
+      // mongoose.disconnect();
     });
   } else {
     storage.getAll()
@@ -31,11 +31,11 @@ router.get('/leads', (req, res) => {
       res.send(leads);
     })
     .then(() => {
-      mongoose.disconnect();
+      // mongoose.disconnect();
     })
     .catch(err => {
       console.error(err);
-      mongoose.disconnect();
+      // mongoose.disconnect();
     });
   }
 });
@@ -45,11 +45,11 @@ router.post('/leads', (req, res) => {
   .then(lead => {
     res.status(200);
     res.send(lead);
-    mongoose.disconnect();
+    // mongoose.disconnect();
   })
   .catch(err => {
     console.error(err);
-    mongoose.disconnect();
+    // mongoose.disconnect();
   });
 });
 
@@ -57,12 +57,12 @@ router.put('/leads', (req, res) => {
   storage.update(req.query.id, req.body)
   .then(lead => {
     res.status(200);
-    res.send(`Updated successfully`);
-    mongoose.disconnect();
+    res.send('updated successfully');
+    // mongoose.disconnect();
   })
   .catch(err => {
     console.error(err);
-    mongoose.disconnect();
+    // mongoose.disconnect();
   });
 });
 
@@ -70,12 +70,12 @@ router.delete('/leads', (req, res) => {
   storage.remove(req.query.id)
   .then(project => {
     res.status(204);
-    res.send(project);
-    mongoose.disconnect();
+    res.send('deleted successfully');
+    // mongoose.disconnect();
   })
   .catch(err => {
     console.error(err);
-    mongoose.disconnect();
+    // mongoose.disconnect();
   });
 });
 
