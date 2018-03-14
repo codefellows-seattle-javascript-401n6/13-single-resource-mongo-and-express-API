@@ -25,6 +25,16 @@ let leadSchema = mongoose.Schema({
   quote: quoteSchema
 });
 
+leadSchema.methods.isExpired = function() {
+  let today = new Date();
+  let expiration = this.quote.expiration;
+  if (today.getTime() <= expiration.getTime()) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 const Quote = mongoose.model('quotes', quoteSchema);
 const Lead = mongoose.model('leads', leadSchema);
 

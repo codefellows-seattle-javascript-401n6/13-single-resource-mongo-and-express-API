@@ -13,7 +13,17 @@ router.get('/leads', (req, res) => {
     let id = req.query.id;
     storage.get(id)
     .then(lead => {
-      res.send(lead);
+      let expired = lead.isExpired();
+      let reply = {
+        lead,
+        expired,
+      }
+      res.send(reply);
+      mongoose.disconnect();
+    })
+    .catch(err => {
+      console.error(err);
+      mongoose.disconnect();
     });
   } else {
     storage.getAll()

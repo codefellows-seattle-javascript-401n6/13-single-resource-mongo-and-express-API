@@ -8,7 +8,7 @@ const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/test'
 
 mongoose.connect(DATABASE_URL).then(
   () => {
-    console.info(`Mongoose connection successfully created.`)
+    console.info(`Mongoose connection successfully created.`);
   })
   .catch((error) => {
     console.error(`Error on connection: ${error}`);
@@ -74,10 +74,11 @@ function remove(id) {
   });
 }
 
+
 module.exports = {
   save,
   getAll,
   get,
   update,
-  remove
+  remove,
 }
