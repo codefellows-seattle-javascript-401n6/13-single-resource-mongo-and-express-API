@@ -111,7 +111,6 @@ describe('Server tests', () => {
         if (err) {
           console.error(err);
         }
-        console.log('response body', res.text);
         expect(res.status).toBe(204);
         done();
       });
