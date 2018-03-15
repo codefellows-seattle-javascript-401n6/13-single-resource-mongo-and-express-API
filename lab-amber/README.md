@@ -45,6 +45,8 @@ Quote: The subdocument schema.
 };
 ```
 
+leadSchema has a method called isExpired which returns whether or not the lead's quote has expired.
+
 ### Quote Schema
 Required keys: Cost which is a number
 
