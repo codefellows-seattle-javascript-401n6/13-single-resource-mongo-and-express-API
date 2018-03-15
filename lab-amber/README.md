@@ -111,4 +111,5 @@ and send proper JSON in the request body:
 ```
 
 ## Special Thanks
-Thank you to emailregex.com for the email validator http://emailregex.com/
+* JB Tellez for mongone.js found in the /lib folder.
+* Thank you to emailregex.com for the email validator http://emailregex.com/

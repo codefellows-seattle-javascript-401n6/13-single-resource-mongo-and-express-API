@@ -19,11 +19,9 @@ router.get('/leads', (req, res) => {
         expired,
       }
       res.send(reply);
-      // mongoose.disconnect();
     })
     .catch(err => {
       console.error(err);
-      // mongoose.disconnect();
     });
   } else {
     storage.getAll()
@@ -31,11 +29,9 @@ router.get('/leads', (req, res) => {
       res.send(leads);
     })
     .then(() => {
-      // mongoose.disconnect();
     })
     .catch(err => {
       console.error(err);
-      // mongoose.disconnect();
     });
   }
 });
@@ -45,11 +41,9 @@ router.post('/leads', (req, res) => {
   .then(lead => {
     res.status(200);
     res.send(lead);
-    // mongoose.disconnect();
   })
   .catch(err => {
     console.error(err);
-    // mongoose.disconnect();
   });
 });
 
@@ -58,11 +52,9 @@ router.put('/leads', (req, res) => {
   .then(lead => {
     res.status(200);
     res.send('updated successfully');
-    // mongoose.disconnect();
   })
   .catch(err => {
     console.error(err);
-    // mongoose.disconnect();
   });
 });
 
@@ -71,11 +63,9 @@ router.delete('/leads', (req, res) => {
   .then(project => {
     res.status(204);
     res.send('deleted successfully');
-    // mongoose.disconnect();
   })
   .catch(err => {
     console.error(err);
-    // mongoose.disconnect();
   });
 });
 

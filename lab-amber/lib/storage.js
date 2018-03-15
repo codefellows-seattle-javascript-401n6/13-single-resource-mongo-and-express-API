@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const mongone = require('./mongone.js');
 
 const Info = require('../models/lead.js');
 
