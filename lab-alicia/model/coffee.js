@@ -5,42 +5,46 @@ mongoose.connect('mongodb://localhost/');
 
 const Coffee = require('../route/coffee-route.js');
 
-let itemSchema = new mongoose.Schema({
+let CoffeeSchema = new mongoose.Schema({
     name: {type: String, unique: id},
     cost: Number,
 });
 
-let coffeeShopSchema = new mongoose.Schema({
-    items: [itemSchema]
+let coffeeRoastersSchema = new mongoose.Schema({
+    Coffee: [CoffeeSchema]
 });
 
 coffeeShopSchema.methods.total = () => {
     let total = 0; 
-    this.items.forEach(item => {
-        total += item.cost;
+    this.Coffees.forEach(Coffee => {
+        total += Coffee.cost;
     });
     return total;
 };
 
-let Item = mongoose.model('Item', itemSchema);
-let CoffeeShop = mongoose.model('Coffee Shop', coffeeShopSchema);
+let Coffee = mongoose.model('Coffee', CoffeeSchema);
+let Roasters = mongoose.model('Coffee Shop', RoastersSchema);
 
-let coffee = new Item({name: 'Coffee', cost: 350});
-let milk = new Item({name: 'Milk', cost: 150})
-let pastries = new Item({name: 'Pastries', cost: 400});
+let papuaNewGuinea = new Coffee({name: 'Papua New Guinea Blend', cost: 350});
+let ethiopia = new Coffee({name: 'Ethiopian Blend', cost: 150});
+let sumatra = new Coffee({name: 'Sumatran Blend', cost: 400});
+
+// let location = new Roasters({name: 'Location', cost: 200000});
+// let roasters = new Roasters({name: 'Roasters', cost: 300000});
+// let bakery = new Roasters({name: 'Bakery', cost: 400000});
 
 Promise.all([
-    coffee.save(),
-    milk.save(),
-    pastries.save(),
+    papuaNewGuinea.save(),
+    ethiopia.save(),
+    sumatra.save(),
 ])
-.then(items => {
-    let coffeeShop = new CoffeeShop({items: items});
-    return coffeeShop.save() 
+.then(Coffees => {
+    let Roasters = new Roasters({Coffee: Coffee});
+    return Roasters.save() 
 })
-.then(savedCoffeeShop => {
-    console.log('Coffee Shop:', savedCoffeeShop);
-    console.log('Total Cost:', savedCoffeeShop.total());
+.then(savedCoffeeRoasters => {
+    console.log('Coffee Roasters:', savedCoffeeRoasters);
+    console.log('Total:', savedCoffeeRoasters.total());
 })
 .then(() => {
     mongoose.disconnect();
@@ -50,4 +54,4 @@ Promise.all([
     mongoose.disconnect();
 });
 
-module.exports = {Item, CoffeeShop};
+module.exports = {Coffee, Roasters};
