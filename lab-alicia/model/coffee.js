@@ -3,48 +3,46 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/');
 
-const Coffee = require('../route/coffee-route.js');
+const coffee = require('../route/coffee-router.js');
 
-let CoffeeSchema = new mongoose.Schema({
-    name: {type: String, unique: id},
-    cost: Number,
+let coffeeSchema = new mongoose.Schema({
+    origin: { type: String, required: true, unique: id },
+    roast: { type: String, required: true },
+    cost: { type: Number, required: true },
+    timestamp: { type: Date, required: true },
 });
 
-let coffeeRoastersSchema = new mongoose.Schema({
-    Coffee: [CoffeeSchema]
+let roastersSchema = new mongoose.Schema({
+    coffeeBlends: [coffeeSchema]
 });
 
-coffeeShopSchema.methods.total = () => {
+roastersSchema.methods.total = () => {
     let total = 0; 
-    this.Coffees.forEach(Coffee => {
-        total += Coffee.cost;
+    this.coffeeBlends.forEach(coffee => {
+        total += coffee.roast;
     });
     return total;
 };
 
-let Coffee = mongoose.model('Coffee', CoffeeSchema);
-let Roasters = mongoose.model('Coffee Shop', RoastersSchema);
+let Coffee = mongoose.model('Coffee', coffeeSchema);
+let Roasters = mongoose.model('Coffee Roasters', roastersSchema);
 
-let papuaNewGuinea = new Coffee({name: 'Papua New Guinea Blend', cost: 350});
-let ethiopia = new Coffee({name: 'Ethiopian Blend', cost: 150});
-let sumatra = new Coffee({name: 'Sumatran Blend', cost: 400});
-
-// let location = new Roasters({name: 'Location', cost: 200000});
-// let roasters = new Roasters({name: 'Roasters', cost: 300000});
-// let bakery = new Roasters({name: 'Bakery', cost: 400000});
+let papuaNewGuinea = new Coffee({origin: 'Papua New Guinea', roast: 'medium', cost: 400});
+let ethiopia = new Coffee({origin: 'Ethiopia', roast: 'light', cost: 200});
+let sumatra = new Coffee({origin: 'Sumatra', roast: 'dark', cost: 350});
 
 Promise.all([
     papuaNewGuinea.save(),
     ethiopia.save(),
     sumatra.save(),
 ])
-.then(Coffees => {
-    let Roasters = new Roasters({Coffee: Coffee});
-    return Roasters.save() 
+.then(coffees => {
+    let roasters = new Roasters({coffees: coffees});
+    return roasters.save() 
 })
-.then(savedCoffeeRoasters => {
-    console.log('Coffee Roasters:', savedCoffeeRoasters);
-    console.log('Total:', savedCoffeeRoasters.total());
+.then(savedRoasters => {
+    console.log('Coffee Roasters:', savedRoasters);
+    console.log('Total Cost:', savedRoasters.total());
 })
 .then(() => {
     mongoose.disconnect();
