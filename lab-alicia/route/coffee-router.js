@@ -2,47 +2,61 @@
 
 const express = require('express');
 const jsonParser = require('body-parser').json();
+const createError = require('http-errors');
 
-const Coffee = require('../model/coffee.js');
+const Coffee = require('../model/coffee-schema.js');
+const roasterSchema = require('../model/roaster-schema.js');
 const storage = require('../lib/storage.js');
 
-const router = express.Router;
+const router = express.Router();
 
 // GET
-// get one thing AND get all
-router.get('/:id', (req, res, next) => {
+// get all
+router.get('/coffees', (req, res) => {
+    Coffee.find()
+    .then((coffees) => res.status(200).json(coffees))
+    .catch(err => createError(404, err.message));
+    });
+
+// get one thing
+router.get('/coffee/:id', (req, res) => {
     Coffee.findById(req.params.id)
-        .populate('items')
-        .then((coffee) => res.status(200).send('get request successful'))
-        .catch(err => next(createError(404, err.message)));
+        // .populate('items')
+        .then((coffee) => res.status(200).json(coffee))
+        .catch(err => createError(404, err.message));
 });
 
 // POST
-router.post('/', jsonParser, (req, res, next) => {
-    req.body.timestamp = new Date();
+router.post('/coffees', (req, res) => {
+    console.log('request:', req.body);
+    // req.body.timestamp = new Date();
     new Coffee(req.body).save()
-        .then((coffee) => res.status(200).send('post successful'))
-        .catch(next);
+        .then((coffee) => res.status(200).json(coffee))
+        .catch(err => createError(404, err.message));
 });
 
 // PUT
-router.put('/:id', jsonParser, (req, res, next) => {
-    Coffee.findByIdUpdate(req.params.id, req.body, {
+router.put('/coffee/:id', (req, res) => {
+    let id = req.params.id;
+    Coffee.findByIdAndUpdate(req.params.id, req.body, {
             new: true
         })
         .then((coffee) =>
-            res.status(200).send('update successful'))
+            res.status(200).json(coffee))
         .catch(err => {
-            if (err.name === 'ErrorValidating') return next(err);
-            next(createError(404, err.message))
+            if (err.name === 'ErrorValidating') return (err);
+            createError(404, err.message)
         })
 });
 
 // DELETE
-router.delete('/:id', (req, res, next) => {
+router.delete('/coffee/:id', (req, res) => {
     Coffee.findByIdAndRemove(req.params.id)
-        .then(() => res.status(204).send('delete successful'))
-        .catch(err => next(createError(404, err.message)))
+        .then(() => {    
+            console.log('Delete:', req.params.id)
+            res.sendStatus(204)
+        })
+        .catch(err => createError(500, err.message))
 });
 
 module.exports = router;

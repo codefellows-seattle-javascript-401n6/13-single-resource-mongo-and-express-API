@@ -13,7 +13,7 @@
 
 ## Introduction
 
-* This is a simple node.js app that builds an HTTP server utilizing RESTful Express routes working with MongoDB through Mongoose for storage. This RESTful API allows the user to make HTTP requests with data about international coffee roasts utilizing advanced Mongoose features like sub-documents, attaching methods to schemas, and validation.
+This is a simple node.js app that builds an HTTP server utilizing RESTful Express routes working with MongoDB through Mongoose for storage. This RESTful API allows the user to make HTTP requests with data about coffee roastsers utilizing advanced Mongoose features like sub-documents, attaching methods to schemas, and validation.
 
 ********************** TO: DO: Include a summary description of your Mongoose Schemas, methods they have, and validation they use.
 

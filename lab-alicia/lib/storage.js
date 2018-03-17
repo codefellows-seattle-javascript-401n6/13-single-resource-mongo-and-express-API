@@ -2,9 +2,10 @@
 
 const mongoose = require('mongoose');
 
-const Coffee = require('../../model/coffee.js');
+const Coffee = require('../model/coffee-schema.js');
+const Roaster = require('../model/roaster-schema.js');
 
-const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost/test';
+const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost/coffees';
 
 mongoose.connect(DATABASE_URL).then(
     () => {
