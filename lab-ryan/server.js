@@ -14,9 +14,11 @@ const storage = require('./lib/storage.js');
 
 const routes = require('./routes/routes.js');
 
-seeder.seed(storage);
+// seeder.seed(storage);
 
 app.use('/api/norris', routes);
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {console.log('listening on: http://localhost:' + PORT)});
+let PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log('listening on: http://localhost', PORT);
+});

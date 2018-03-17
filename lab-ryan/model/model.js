@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/norris');
 
 let chuckNorrisSchema = mongoose.Schema({
     name: String,
-    movie: {movieSchema},
+    movie: {name: String, date: Number},
 });
 
 let movieSchema = mongoose.Schema({

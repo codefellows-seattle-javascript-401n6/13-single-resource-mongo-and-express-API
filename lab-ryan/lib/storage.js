@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const Norris = require('../model/model.js');
 
-mongoose.connect('mongod://localhost/norris')
+mongoose.connect('mongod://localhost/27017')
 .then(() => {
     console.info('mongoose is connected');
 }).catch (
