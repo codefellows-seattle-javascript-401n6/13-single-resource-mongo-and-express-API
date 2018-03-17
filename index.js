@@ -6,22 +6,24 @@ mongoose.connect('');
 
 let dollSchema = new mongoose.Schema({
   name: String,
-  layers: number,
+  order: number,
+  
 });
 
 let matryoshkaSchema = new mongoose.Schema({
-  dolls : [dollSchema]
+  dolls : [dollSchema],
+  layers: number,
 });
 
-matryoshkaSchema.methods.largest = function() {
-  let largest = 0;
-  this.dolls.forEach(dolls => {
-    if(largest <= dolls.layers){
-      largest = elem;
-    }
+matryoshkaSchema.methods.layers = function() {
+  let layers = 0;
+  this.dolls.forEach(() => {
+    layers = layers ++;
   });
-  return largest;
+  return layers;
 };
 
 let Doll = mongoose.model('Doll', dollSchema);
-let Matryoshka = mongoose.model('Matryoshka', matryoshkaSchema)
+let Matryoshka = mongoose.model('Matryoshka', matryoshkaSchema);
+
+let moira = new Doll({name:'Moira', order})
