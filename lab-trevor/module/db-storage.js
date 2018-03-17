@@ -2,32 +2,14 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
 const Team = require('../model/teams.js').Team;
-const Owner = require('../model/teams.js').Owner;
+const Nfl = require('../model/teams.js').Nfl;
 
-function save(newTeam, newOwner){
-    console.log('new owner', newOwner)
-    let teamModel = new Team({
-        _id: new mongoose.Types.ObjectId(),
-        location: newTeam.location,
-        mascot: newTeam.mascot,
-        division: newTeam.division,
-    })
-    
-    
+function save(teamModel){
     return new Promise ((resolve, reject) => {
-            teamModel.save((err) => {
-                if (err) return handleError(err);
-                let ownerModel = new Owner({
-                    name: newOwner.name,
-                    team: teamModel._id,
-                })
-                ownerModel.save((err) => {
-                    if (err) return handleError(err);
-                })
-            
-            })
+      teamModel.save((err, savedTeam) => {
+          resolve(savedTeam)
+      })  
     })
-    console.log('saving team')
 }
 
 function remove(id) {
@@ -45,6 +27,9 @@ function removeAll(){
         Team.remove((err, teams) => {
             resolve(teams);
         })
+        Nfl.remove((err, league) => {
+            resolve(league);
+        })
     })
 }
 function get(id){
@@ -55,6 +40,6 @@ function get(id){
     })
 }
     
-module.exports = {save, Team, get, removeAll, remove}
+module.exports = {save, Team, get, removeAll, remove, Nfl}
 
 

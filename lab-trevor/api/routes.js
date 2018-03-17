@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require('../module/db-storage.js');
 const storage = require('../module/storage.js');
 const Team = require('../model/teams').Team;
-const Owner = require('../model/teams').Owner;
+const Nfl = require('../model/teams').Nfl;
 
 //dont need /city because you already used it in the server.js
 router.get('/', (req,res) => {
@@ -15,6 +15,7 @@ router.get('/', (req,res) => {
         })
     } else {
         db.Team.find()
+        db.Nfl.find()
         .then((results) =>{
             console.log(results)
             res.send(results);
