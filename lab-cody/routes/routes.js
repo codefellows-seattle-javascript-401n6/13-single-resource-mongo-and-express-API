@@ -25,6 +25,46 @@ router.get('/', (req, res) => {
     }
 });
 
+router.post('/', (req, res) => {
+    console.log('req.body', req.body);
+    if (req.body.name === undefined ||
+    req.body.ammount === undefined) {
+        res.status(400);
+        res.send('valid JSON please');
+    }else{
+    let brews = new Fridge.Beers({
+      name: req.body.name,
+      ammount: req.body.ammount,
+      
+    });
+    brews.save()
+    .then(brews => {
+      res.status(200);
+      res.send(brews);
+    });
+    }
+  });
+
+
+  router.put('/', (req, res) => {
+    let id = req.query.id;
+    let beer = req.body;
+    storage.update(id, beer)
+    .then(beer => {
+        res.send(beer);
+    });
+  });
+
+
+router.delete('/', (req, res) => {
+    let id = req.query.id;
+    storage.remove(id)
+    .then(fridge => {
+        res.status(204);
+        res.send(fridge);
+    });
+});
+
 
 
 

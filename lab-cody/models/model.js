@@ -18,4 +18,4 @@ let FridgeSchema = mongoose.Schema({
 let Beers = mongoose.model('Beers', BeerSchema);
 let Fridge = mongoose.model('Fridge', FridgeSchema);
 
-module.exports = Beers, Fridge;
+module.exports = {Beers, Fridge};
