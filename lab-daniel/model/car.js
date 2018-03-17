@@ -1,0 +1,56 @@
+'use strict'
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/27017');
+
+//set the schemas
+let carSchema = mongoose.Schema({
+    make: String,
+    model: String,
+    year: Number
+});
+
+let garageSchema = mongoose.Schema({
+    cars: [carSchema]
+});
+
+let Car = mongoose.model('Car', carSchema);
+let Garage = mongoose.model('Garage', garageSchema);
+
+//creating new cars
+let ferarri = new Car({
+    make: 'Ferarri', 
+    model: 'LaFerarri Aperta',
+    year: 2017
+});
+let lamborghini = new Car({
+    make: 'Lamborghini',
+    model: 'SV Coupe',
+    year: 2016
+});
+let prius = new Car({
+    make: 'Toyota',
+    model: 'Prius',
+    year: 2007
+});
+
+
+
+Promise.all([
+    ferarri.save(),
+    lamborghini.save(),
+    prius.save(),
+])
+.then(cars => {
+    let newGarage = new Garage({cars: cars});
+    return newGarage.save()
+})
+.then((savedCars) => {
+    console.log(savedCars);
+    mongoose.disconnect();
+})
+.catch((err) => {
+    console.log('Error: ', err)
+    mongoose.disconnect()
+})
+
+module.exports = {Car, Garage};
