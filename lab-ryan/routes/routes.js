@@ -2,10 +2,10 @@
 
 const express = require('express');
 
-const Norris = require('../model/norris');
+const Norris = require('../model/model.js');
 
-const storage = require('../lib/storage');
-const router = express.router();
+const storage = require('../lib/storage.js');
+const router = express.Router();
 
 router.get('/', (req, res) => {
     if (req.query.id){
@@ -22,3 +22,43 @@ router.get('/', (req, res) => {
         });
     }
 });
+
+router.post('/', (req,res) => {
+    console.log('POST BODY: ', req.body);
+    if(req.body.name === undefined || req.body.date === undefined){
+        res.status(400);
+        res.send('invlaid JSON request');
+    } else {
+        let chuckNorris = new Norris.Movies({
+            name: req.body.name,
+            date: req.body.date,
+        });
+        chuckNorris.save()
+        .then(norris => {
+            res.status(200);
+            res.send(chuckNorris);
+        });
+    }
+});
+
+router.put('/', (req, res) => {
+    let id = req.query.id;
+    let norris = req.body;
+    storage.update(id, norris)
+    .then(norris => {
+        res.send(norris);
+    });
+});
+
+router.delete('/', (req, res) => {
+    let id = req.query.id;
+    storage.remove(id)
+    .then(norris => {
+        res.status(204);
+        res.send(norris);
+    });
+});
+
+
+
+module.exports = router;

@@ -1,7 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const Norris = require('../model/norris.js');
+
+const Norris = require('../model/model.js');
 
 mongoose.connect('mongod://localhost/norris')
 .then(() => {
@@ -12,45 +13,47 @@ mongoose.connect('mongod://localhost/norris')
     })
 )
 
+// function save(){
+//     return new Promise((resolve, reject) => {
+        
+//         resolve(norris);
+//     });
+// }
+
 function getAll(){
-    let 
     return new Promise((resolve, reject) => {
-        resolve();
+        Norris.Movies.find((err, norris) => {
+            resolve(norris);
+        });
     });
 }
 
 function get(id){
     return new Promise((resolve, reject) => {
-        resolve();
+        Norris.Movies.findOne({_id: id}, (err, norris) => {
+            resolve(norris);
+        });
     });
 }
 
-function save(){
+function update(id) {
     return new Promise((resolve, reject) => {
-        resolve();
-    });
-}
-
-funciton update(id) {
-    return new Promise((resolve, reject) => {
-        if(err){
-            console.log(err);
-        }
-        resolve();
+        Norris.Movies.findOneAndUpdate(id, norris, (err, norris) => {
+           resolve(norris);
+        });
     });
 }
 
 function remove(id){
     return new Promise((resolve, reject) => {
-        if(err){
-            console.log(err);
-        }
-        resolve();
+        Norris.Movies.remove({_id: id}, (err, norris) => {
+            resolve(norris);
+        });
     });
 }
 
 module.exports = {
-    save,
+    // save,
     getAll,
     get,
     update,
