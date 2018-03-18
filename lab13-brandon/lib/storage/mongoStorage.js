@@ -16,7 +16,7 @@ function seed(storage) {
       ]).then(movies => {
         return new Director({director: 'Farrelly Brothers', movies: movies }).save();
       }).then(director => {
-        console.log('director', director);
+        // console.log('director', director);
       }); 
     });
 }
@@ -27,7 +27,6 @@ function save(movie) {
     title: movie.title,
     rating: movie.rating,
   });
-
   return new Promise((resolve, reject) => {
     movieModel.save((err, savedMovie) => {
       resolve(savedMovie);
@@ -37,36 +36,33 @@ function save(movie) {
 
 function get(id) {
   return new Promise((resolve, reject) => {
-    Movie.findOne({_id: id}, (err, movies) => {
-      if(err) {
-        console.log('error', err);
-      }
-      console.log('Movies', movies);
-      resolve(movies);
+    return Movie.findOne({_id: id}).then(movie => {
+      console.log(' get movie function', movie);
+      resolve(movie);
     });
   });
 }
 
 function getAll() {
   return new Promise((resolve, reject) => {
-    Movie.find((err, movies) => {
-      resolve(movies);
+    Movie.find((err, movie) => {
+      resolve(movie);
     });
   });
 }
 
 function remove(id) {
   return new Promise((resolve, reject) => {
-    Movie.remove({_id: id}, (err, movie) => {
-      resolve(movie);
+    Director.remove({_id: id}, (err, director) => {
+      resolve(director);
     });
   });
 }
 
 function removeAll() {
   return new Promise((resolve, reject) => {
-    Movie.remove((err, movies) => {
-      resolve(movies);
+    Director.remove((err, director) => {
+      resolve(director);
     });
   });
 }
