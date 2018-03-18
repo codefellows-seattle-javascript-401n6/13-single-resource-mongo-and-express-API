@@ -32,11 +32,9 @@ Promise.all([
 })
 .then((savedCars) => {
     console.log(savedCars);
-    mongoose.disconnect();
 })
 .catch((err) => {
     console.log('Error: ', err)
-    mongoose.disconnect()
 });
 
 module.exports = {Car, Garage};
