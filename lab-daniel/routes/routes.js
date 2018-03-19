@@ -3,6 +3,7 @@
 const express = require('express');
 const Router = express.Router();
 const Garage = require('../model/car.js').Garage;
+const Car = require('../model/car.js').Car;
 const storage = require('../lib/mongo.js');
 
 
@@ -25,6 +26,12 @@ Router.get('/', (req, res) => {
 
 //SAVE NEW CAR
 Router.post('/', (req, res) => {
+    if(req.body.make === undefined ||
+       req.body.model === undefined ||
+       req.body.year === undefined){
+           res.status(404);
+           res.send('Car not found')
+       }
     let cars = new Car({
         make: req.body.make,
         model: req.body.model,
@@ -35,7 +42,7 @@ Router.post('/', (req, res) => {
         res.status(200);
         res.send(cars)
     });
-})
+});
 
 //UPDATE EXISTING CAR
 Router.put('/', (req, res) => {
@@ -51,10 +58,11 @@ Router.put('/', (req, res) => {
 Router.delete('/', (req, res) => {
     let id = req.query.id;
     storage.remove(id)
-    .then(garage => {
-        res.send(garage)
-    })
-})
+    .then(car => {
+        res.status(200);
+        res.send(car)
+    });
+});
 
 
 module.exports = Router;

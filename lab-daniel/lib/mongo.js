@@ -29,7 +29,7 @@ function getAll() {
 //UPDATE CARS
 function update(id, car){
   return new Promise((resolve, reject) => {
-    Garage.Car.findeOneAndUpdate(id, car, (err, car) => {
+    Car.findOneAndUpdate(id, car, (err, car) => {
       resolve(car);
     });
   });
@@ -38,9 +38,10 @@ function update(id, car){
 
 function remove(id){
   return new Promise((resolve, reject) => {
-    Garage.Car.remove({_id: id}, (err, car) => {
+    Car.remove({_id: id}, (err, car) => {
       resolve(car)
     });
  });
 }
+
 module.exports = {get, getAll, update, remove};

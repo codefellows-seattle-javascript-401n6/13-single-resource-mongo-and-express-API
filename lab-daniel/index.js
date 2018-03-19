@@ -14,7 +14,7 @@ const Cars = require('./model/car.js');
 const Router = require('./routes/routes.js');
 
 app.use(bodyParser.json());
-app.use('/', Router);
+app.use('/api/cars', Router);
 
 //check for port
 app.listen(PORT, () => {
