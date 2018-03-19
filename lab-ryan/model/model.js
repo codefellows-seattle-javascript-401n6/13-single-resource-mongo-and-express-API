@@ -1,16 +1,15 @@
 'use strict';
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/norris');
+
+let movieSchema = mongoose.Schema({
+    name: String,
+    date: Number,
+});
 
 let chuckNorrisSchema = mongoose.Schema({
     name: String,
-    movie: {name: String, date: Number},
-});
-
-let movieSchema = mongoose.Schema({
-    name: {type: String, required: true, unique: false},
-    date: {type: Number, required: true, unique: false},
+    movie: [movieSchema],
 });
 
 let Norris = mongoose.model('Norris', chuckNorrisSchema);

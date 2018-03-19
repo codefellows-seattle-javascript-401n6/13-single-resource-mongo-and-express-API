@@ -2,9 +2,13 @@
 
 const mongoose = require('mongoose');
 
-const Norris = require('../model/model.js');
+const Actor = require('../model/model.js');
+//Actor is using Norris and Movies from model.js file
 
-mongoose.connect('mongod://localhost/27017')
+
+const DATABASE_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
+
+mongoose.connect(DATABASE_URL)
 .then(() => {
     console.info('mongoose is connected');
 }).catch (
@@ -13,16 +17,25 @@ mongoose.connect('mongod://localhost/27017')
     })
 )
 
-// function save(){
-//     return new Promise((resolve, reject) => {
-        
-//         resolve(norris);
-//     });
-// }
+function save(norris){
+    let movieModel = new Actor.Movies({
+        name: norris.movie[0].name,
+        date: norris.movie[0].date,
+    });
+    let norrisModel = new Actor.Norris({
+        name: norris.name,
+        movie: movieModel,
+    });
+    return new Promise((resolve, reject) => {
+        norrisModel.save((err, actionHero) => {
+            resolve(actionHero);
+        })
+    });
+}
 
 function getAll(){
     return new Promise((resolve, reject) => {
-        Norris.Movies.find((err, norris) => {
+        Actor.Norris.find((err, norris) => {
             resolve(norris);
         });
     });
@@ -30,15 +43,15 @@ function getAll(){
 
 function get(id){
     return new Promise((resolve, reject) => {
-        Norris.Movies.findOne({_id: id}, (err, norris) => {
+        Actor.Norris.findOne({_id: id}, (err, norris) => {
             resolve(norris);
         });
     });
 }
 
-function update(id) {
+function update(id, norris) {
     return new Promise((resolve, reject) => {
-        Norris.Movies.findOneAndUpdate(id, norris, (err, norris) => {
+        Actor.Norris.findOneAndUpdate(id, norris, (err, norris) => {
            resolve(norris);
         });
     });
@@ -46,14 +59,14 @@ function update(id) {
 
 function remove(id){
     return new Promise((resolve, reject) => {
-        Norris.Movies.remove({_id: id}, (err, norris) => {
+        Actor.Norris.remove({_id: id}, (err, norris) => {
             resolve(norris);
         });
     });
 }
 
 module.exports = {
-    // save,
+    save,
     getAll,
     get,
     update,

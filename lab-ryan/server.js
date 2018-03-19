@@ -9,12 +9,9 @@ app.use(bodyParser.json());
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/');
 
-// const seeder = require('./lib/seeder.js');
 const storage = require('./lib/storage.js');
 
 const routes = require('./routes/routes.js');
-
-// seeder.seed(storage);
 
 app.use('/api/norris', routes);
 
