@@ -30,9 +30,9 @@ Promise.all([
     let newGarage = new Garage({cars: cars});
     return newGarage.save()
 })
-.then((savedCars) => {
-    console.log(savedCars);
-})
+// .then((savedCars) => {
+//     console.log(savedCars);
+// })
 .catch((err) => {
     console.log('Error: ', err)
 });
