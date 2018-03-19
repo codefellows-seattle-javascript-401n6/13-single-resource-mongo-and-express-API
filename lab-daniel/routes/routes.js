@@ -13,12 +13,13 @@ Router.get('/', (req, res) => {
     if(id){
         storage.get(id)
         .then(vehicle => {
-            res.send(vehicle)
+            res.status(200);
+            res.send(vehicle);
         });
     }else {
         storage.getAll()
         .then(vehicles => {
-            console.log(vehicles)
+            res.status(200);
             res.send(vehicles);
         });
     }
@@ -50,6 +51,7 @@ Router.put('/', (req, res) => {
     let car = req.body;
     storage.update(id, car)
     .then(car => {
+        res.status(200);
         res.send(car);
     });
 });
