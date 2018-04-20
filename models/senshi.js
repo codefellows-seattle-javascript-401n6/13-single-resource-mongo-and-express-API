@@ -1,8 +1,10 @@
-'use strict'
+'use strict';
 const mongoose = require('mongoose');
+const createError = require('http-errors');
+
 let senshiSchema = mongoose.Schema({
-    senshiName: {type: String, unique: true}, 
+  name:{ type: String, require: true},
+  age:{ type: String, require: true}
 });
 const Senshi = mongoose.model('senshi', senshiSchema);
-
 module.exports = Senshi;
