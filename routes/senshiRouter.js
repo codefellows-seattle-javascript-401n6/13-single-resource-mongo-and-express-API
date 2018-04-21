@@ -1,12 +1,9 @@
 'use strict';
 
-const express = require('express');
-const senshiRouter = express.Router();
+const Router = require('express').Router;
 const jsonParser = require('body-parser').json();
-
 const Senshi = require('../models/senshi.js');
-const senshiMongoose = require('../models/senshiMongoose.js');
-const mongoose = require('mongoose');
+const senshiRouter = module.exports = new Router();
 
 senshiRouter.get('/api/senshi/:senshiId', (req, res, next) =>{
   Senshi.findById(req.params.senshiId)
@@ -15,10 +12,11 @@ senshiRouter.get('/api/senshi/:senshiId', (req, res, next) =>{
 });
 
 
-senshiRouter.post('/api/list', jsonParser, (req, res, next) => {
+senshiRouter.post('/api/senshi', jsonParser, function (req, res, next){
+  console.log('19 body',req.body);
   new Senshi(req.body).save()
-  .then( list => res.json(list))
+  .then( senshi => res.json(senshi))
   .catch(next);
 });
-module.exports = senshiRouter;
+
 

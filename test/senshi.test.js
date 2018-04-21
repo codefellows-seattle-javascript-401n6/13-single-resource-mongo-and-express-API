@@ -1,18 +1,18 @@
 'use strict';
 
-const request = require('superagent');
-const Senshi = require('../model/list.js');
+const superagent = require('superagent');
+const Senshi = require('../models/senshi.js');
 const PORT = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 
-require('../server.js');
+// require('../index.js');
 require('jest');
 
-const url = `http://localhost:${PORT}`;
+const url = 'http://localhost:3000';
 const exampleSenshi = {
   name:'Usagi Tsukino',
   age:'16'
-}
+};
 //change afterEach and beforeEach to afterAll and beforeAll if 
 //you add more tests
 describe('Senshi Routes', function(){
@@ -27,10 +27,11 @@ describe('Senshi Routes', function(){
         }
         done();
       });
-      it('should return a senshi', done =>{
-        request.post(`${url}/api/list`)
+      it('should return a senshi', done => {
+        console.log('31 url',`${url}/api/senshi`);
+        superagent.post('http://localhost:3000/api/senshi')
         .send(exampleSenshi)
-        .end((err,res) =>{
+        .end((err,res) => {
           if(err) return done(err);
           expect(res.status).toEqual(200);
           expect(res.body.name).toEqual('Usagi Tsukino');
@@ -50,7 +51,7 @@ describe('Senshi Routes', function(){
         })
         .catch(done);
       });
-      afterEach(done =>{
+      afterEach(function(done) {
         if(this.tempSenshi){
           Senshi.remove({})
           .then(() => done())
@@ -59,8 +60,8 @@ describe('Senshi Routes', function(){
         }
         done();
       });
-      it('should return a senshi', done => {
-        request.get(`${url}/api/senshi/${this.tempSenshi._id}`)
+      it.skip('should return a senshi', function(done) {
+        superagent.get(`${url}/api/senshi/${this.tempSenshi._id}`)
         .end((err, res) =>{
           if(err) return done(err);
           expect(res.status).toEqual(200);
