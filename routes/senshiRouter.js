@@ -6,6 +6,8 @@ const Senshi = require('../models/senshi.js');
 const senshiRouter = module.exports = new Router();
 
 senshiRouter.get('/api/senshi/:senshiId', (req, res, next) =>{
+  console.log('9 router senshid', req.params);
+  console.log('10 router senshid', req.params.senshiId);
   Senshi.findById(req.params.senshiId)
     .then(senshi => res.json(senshi))
     .catch(next);
@@ -32,15 +34,8 @@ senshiRouter.put('/api/senshi/:senshiId', (req, res, next) =>{
   .catch(next);
 });
 
-senshiRouter.put('/api/senshi/:senshiId', (req, res, next) =>{
-  Senshi.findOneAndUpdate(req.params.senshiId, req.body, {upsert:true})
-  .then( senshi => res.json(senshi))
-  .catch(next);
-});
-
 
 senshiRouter.delete('/api/senshi/:senshiId', (req, res, next) =>{
   Senshi.findByIdAndRemove(req.params.id)
   .catch(next);
 });
-Senshi.findByIdAndRemove()

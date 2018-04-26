@@ -18,15 +18,15 @@ const exampleSenshi = {
 describe('Senshi Routes', function(){
   describe('POST:/api/senshi', function(){
     describe('valid reqest body', function(){
-      afterEach( done => {
-        if (this.tempSenshi){
-          Senshi.remove({})
-          .then(() => done())
-          .catch(done);
-          return;
-        }
-        done();
-      });
+      // afterEach( done => {
+      //   if (this.tempSenshi){
+      //     Senshi.remove({})
+      //     .then(() => done())
+      //     .catch(done);
+      //     return;
+      //   }
+      //   done();
+      // });
       it('should return a senshi', done => {
         console.log('31 url',`${url}/api/senshi`);
         superagent.post('http://localhost:3000/api/senshi')
@@ -43,29 +43,43 @@ describe('Senshi Routes', function(){
   });
   describe('GET: /api/senshi/:senshiId', function(){
     describe('valid request body', function(){
-      beforeEach(done => {
-        new Senshi(exampleSenshi).save()
+      let tempSenshi = '';
+      beforeEach(done => {  
+       
+        superagent.post('http://localhost:3000/api/senshi')
+        .send(exampleSenshi)
         .then(senshi => {
-          this.tempSenshi = senshi;
+          tempSenshi = senshi;
+          return tempSenshi;
           done();
         })
-        .catch(done);
+        .catch(done => {
+          console.log('57......');
+          done();
+        });
       });
-      afterEach(function(done) {
-        if(this.tempSenshi){
-          Senshi.remove({})
-          .then(() => done())
-          .catch(done);
-          return;
-        }
-        done();
-      });
-      it.skip('should return a senshi', function(done) {
-        superagent.get(`${url}/api/senshi/${this.tempSenshi._id}`)
+      // afterEach(function(done) {
+      //   if(this.tempSenshi){
+      //     Senshi.remove({})
+      //     .then(() => done())
+      //     .catch(done);
+      //     return;
+      //   }
+      //   done();
+      // });
+      it('should return a senshi', done => {
+    
+        superagent.get(`${url}/api/senshi/${tempSenshi.body._id}`)
         .end((err, res) =>{
+       
           if(err) return done(err);
+         
           expect(res.status).toEqual(200);
+          console.log('78 res.body.name', res.body.name);
+          console.log('79 err', err);
+  
           expect(res.body.name).toEqual('Usagi Tsukino');
+          console.log('81 res.body.name after expect', res.body.name);
           done();
         });
       });
