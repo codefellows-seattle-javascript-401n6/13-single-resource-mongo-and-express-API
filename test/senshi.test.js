@@ -35,7 +35,7 @@ describe('Senshi Routes', function(){
           if(err) return done(err);
           expect(res.status).toEqual(200);
           expect(res.body.name).toEqual('Usagi Tsukino');
-          this.tempSenshi = res.body;
+    
           done();
         });
       });
