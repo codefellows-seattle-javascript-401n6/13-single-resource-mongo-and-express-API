@@ -50,7 +50,6 @@ describe('Senshi Routes', function(){
         .send(exampleSenshi)
         .then(senshi => {
           tempSenshi = senshi;
-          return tempSenshi;
           done();
         })
         .catch(done => {
@@ -85,4 +84,43 @@ describe('Senshi Routes', function(){
       });
     });
   });
+  describe(': DELETE/api/senshi/:senshiId', function(){
+    describe('valid request body', function(){
+      let tempSenshi = '';
+      beforeEach(done => {  
+       
+        superagent.post('http://localhost:3000/api/senshi')
+        .send(exampleSenshi)
+        .then(senshi => {
+          tempSenshi = senshi;
+          done();
+        })
+        .catch(done => {
+          console.log('57......');
+          done();
+        });
+      });
+  
+      it('should return a senshi', done => {
+    
+        superagent.delete(`${url}/api/senshi/${tempSenshi.body._id}`)
+        .end((err, res) =>{
+       
+          if(err) return done(err);
+         
+          expect(res.status).toEqual(200);
+          console.log('112', res.status);
+          console.log('1123', res.body);
+        
+          console.log('113 err', err);
+  
+          // expect(res.body.name).toEqual('Usagi Tsukino');
+          console.log('116 res.body.name after expect', res.body.name);
+          done();
+        });
+      });
+    });
+  });
+
 });
+
