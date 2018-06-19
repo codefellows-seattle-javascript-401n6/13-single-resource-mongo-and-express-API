@@ -1,0 +1,24 @@
+{
+  "name": "lab-alicia",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "http-errors": "^1.6.3",
+    "jest": "^22.4.2",
+    "mongoose": "^5.0.10"
+  }
+}
