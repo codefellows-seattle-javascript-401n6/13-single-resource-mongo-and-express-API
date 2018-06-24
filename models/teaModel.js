@@ -18,7 +18,7 @@ let teaSchema = new Schema({
   },
 });
 
-mondule.exports = mongoose.model('tea', teaSchema);
+module.exports = mongoose.model('tea', teaSchema);
 
 
 // const mongoose = require('mongoose');
