@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
 
-const Tea = require('../model/tea');
+const Tea = require('../models/teaModel');
 const storage = require('../lib/storage');
 
 const router = express.Router();
