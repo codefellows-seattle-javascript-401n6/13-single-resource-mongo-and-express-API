@@ -8,6 +8,12 @@ router.get('/', (req, res) => {
     .catch(err => res.send(err))
 });
 
+router.get('/:_id', (req, res) => {
+  Manufacturer.findById(req.params._id)
+    .then(manufacturers => res.json(manufacturers))
+    .catch(err => res.send(err))
+});
+
 router.post('/', (req, res) => {
   Manufacturer.create(req.body)
     .then(manufacturer => res.json(manufacturer))
@@ -15,13 +21,13 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:_id', (req, res) => {
-  Manufacturer.findByIdAndUpdate(req.params._id, req.body)
+  Manufacturer.findByIdAndUpdate(req.params._id, req.body, {new: true})
     .then(manufacturer => res.json(manufacturer))
     .catch(err => res.send(err))
 })
 
 router.delete('/:_id', (req, res) => {
-  Manufacturer.findByIdAndRemove(req.params._id, { new: true})
+  Manufacturer.findByIdAndRemove(req.params._id)
     .then(manufacturer => res.json({ success: true, message: 'deleted document'}))
 })
 
